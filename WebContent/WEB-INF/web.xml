@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>SpringMVC_Study</display-name>
+  <welcome-file-list> 
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  <!-- 配置前端控制器DispatcherServlet:前端控制器就相当于一个servlet -->
+  <servlet>
+    <servlet-name>springmvc</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    
+  <!--contextConfigLocation是用来加载springmvc的配置文件（配置处理器映射器、适配器等） 的，如果不配置contextConfigLocation，
+            则默认加载的是WEB-INF/[DispatcherServlet的Servlet名字]-servlet.xml。所以处理器映射器和处理器适配器都会配在classpath下我们指定的springmvc.xml中 -->
+    <init-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring/springmvc.xml</param-value>
+    </init-param>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>springmvc</servlet-name>
+    <url-pattern>*.action</url-pattern>
+  </servlet-mapping>  
+</web-app>
