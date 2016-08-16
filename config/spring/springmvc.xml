@@ -15,37 +15,48 @@
         http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx.xsd">
-
-    <!-- A.1 处理器适配器：HandlerAdapter。所有处理器适配器都实现了HandlerAdapter接口-->
-    <!-- SimpleControllerHandlerAdapter适配器能执行实现了Controller接口的Handler 
+<!-- 次处为非注解的方式配置 处理器适配器和映射器，下面用注解的方式配置
+    A.1 处理器适配器：HandlerAdapter。所有处理器适配器都实现了HandlerAdapter接口
+    SimpleControllerHandlerAdapter适配器能执行实现了Controller接口的Handler 
   		  所以，现在配置了这个适配器的话，所有的处理器Handler必须要实现Controller接口才行。												
-    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" /> -->	    
-	<!-- B.1 另一种处理器适配器： HttpRequestHandlerAdapter适配器能执行实现了HttpRequestHandler接口的Handler ,跟第一种中实现Controller接口稍微有点不同-->
+    <bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter" />	    
+	B.1 另一种处理器适配器： HttpRequestHandlerAdapter适配器能执行实现了HttpRequestHandler接口的Handler ,跟第一种中实现Controller接口稍微有点不同
 	<bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter" />    
     
-    <!-- A.3 配置处理器Handler：写好相应的Handler    
-	<bean name="/queryItems.action" class="ssm.controller.ItemsController" /> -->
-	<!-- B.3  配置处理器Handler：写好相应的Handler -->
+    A.3 配置处理器Handler：写好相应的Handler    
+	<bean name="/queryItems.action" class="ssm.controller.ItemsController" />
+	B.3  配置处理器Handler：写好相应的Handler
     <bean id="itemsController" class="ssm.controller.ItemsController" />
         
-	<!-- A.2  配置处理器映射器： 将bean的name(指上一步中配置处理器中的name)作为url进行查找，需要在配置Handler时指定beanname（就是url） 
+	A.2  配置处理器映射器： 将bean的name(指上一步中配置处理器中的name)作为url进行查找，需要在配置Handler时指定beanname（就是url） 
 			BeanNameUrlHandlerMapping：表示将定义的Bean的name作为请求的url，需要将编写的controller在spring容器中进行配置（即上面的Handler配置），
 			且指定bean的name为请求的url，且必须以.action结尾=====>所以当请求的地址为：上下文/queryItems.action时，映射器BeanNameUrlHandlerMapping就会找到
 			这个Handler配置中指定的class，也就是IntemsController.java去执行，返回ModelAndView。这样就打通了     【请求===>Handler】这条线了  
-	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />	-->
-	<!-- B.2 还有一种处理器映射器叫简单映射器 ，它的映射方式是直接根据url来的：这种可以直接配url，然后对应的url指定一个Handler，使用的是该Handler对应bean的id，
+	<bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping" />	
+	B.2 还有一种处理器映射器叫简单映射器 ，它的映射方式是直接根据url来的：这种可以直接配url，然后对应的url指定一个Handler，使用的是该Handler对应bean的id，
 			所以只要在bean中配好id，然后将url和这个id对应上即可。 
-　　			经测试，这两个映射器也可以一起使用，互不冲突，匹配到哪个就用哪个。-->
+　　			经测试，这两个映射器也可以一起使用，互不冲突，匹配到哪个就用哪个。
 	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="mappings">
 			<props>
-				<!-- 对itemsController进行url映射，url是/queryItems.action -->
+				对itemsController进行url映射，url是/queryItems.action
 				<prop key="/queryItems.action">itemsController</prop>
 			</props>
 		</property>
 	</bean>
 
-	<!-- 配置视图解析器 ：  进行jsp解析，默认使用jstl标签，classpath下得有jstl的包-->
-	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" />
+	配置视图解析器 ：  进行jsp解析，默认使用jstl标签，classpath下得有jstl的包
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" /> -->
+
+	<!-- 用注解的方式配置 ：上面还配了个Handler，那么url的映射怎么办？这些全交给注解！-->
+	<bean class="ssm.controller.ItemsController"/>
+	
+	<!-- 使用注解的映射器和注解的适配器。（注解的映射器和注解的适配器必须配对使用）-->
+	<!-- 配置注解适配器   -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>
+		
+	<!-- 配置注解映射器 -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+	
 
 </beans>
