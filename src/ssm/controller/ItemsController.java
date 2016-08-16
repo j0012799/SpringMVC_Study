@@ -116,13 +116,13 @@ public class ItemsController implements HttpRequestHandler {
 @Controller
 public class ItemsController {
 
-    // 商品查询列表    sss
+    // 商品查询列表
     // @RequestMapping实现 对queryItems方法和url进行映射，一个方法对应一个url
     // 一般建议将url和方法写成一样
     @RequestMapping("/queryItems")
     public ModelAndView queryItems() throws Exception {
 
-    	System.out.println("基于注解的方式====>进入Handler");
+    	System.out.println("优化注解的方式====>进入Handler");
         //实际中是调用service查找数据库，查询商品列表，这里直接使用静态数据来模拟了
         List<Items> itemsList = new ArrayList<Items>();
         //向list中填充静态数据
