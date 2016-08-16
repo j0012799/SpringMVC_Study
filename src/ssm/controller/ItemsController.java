@@ -116,7 +116,7 @@ public class ItemsController implements HttpRequestHandler {
 @Controller
 public class ItemsController {
 
-    // 商品查询列表
+    // 商品查询列表    sss
     // @RequestMapping实现 对queryItems方法和url进行映射，一个方法对应一个url
     // 一般建议将url和方法写成一样
     @RequestMapping("/queryItems")
