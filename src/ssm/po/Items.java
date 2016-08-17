@@ -10,7 +10,7 @@ public class Items {
     private Float price;
 
     private String pic;
- 
+
     private Date createtime;
 
     private String detail;
